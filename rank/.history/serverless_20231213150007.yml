@@ -1,0 +1,20 @@
+# update it to IAM user name
+service: face-detection-lambda
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+  stage: prod
+#  region: us-east-1
+
+functions:
+  count:
+    handler: handler.count
+    events:
+      - httpApi:
+          path: /count
+          method: GET
+

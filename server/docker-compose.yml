@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  smart-brain-api:
+    container_name: backend
+    build: ./
+    working_dir: /app/server
+    environment:
+      # short version config
+      # it's uri, not url!
+      # the first postgres:// means connecting to the postgres service below
+      POSTGRES_URI: postgres://postgres:123456@postgres:5432/smart-brain-docker
+      REDIS_URI: redis://redis:6379
+
+      # long version config:
+      # POSTGRES_USERS: postgres
+      # POSTGRES_PASSWORD: 123456
+      # POSTGRES_DB: smart-brain-docker
+      # POSTGRES_HOST: postgres
+
+      # if you want to connect your service to the local db
+      # use this in terminal to get into the db
+      # psql postgres://postgres:123456@localhost:5432/smart-brain-docker
+
+    ports:
+      - '3000:3000'
+      # automatically update any change in the code to your container, no need to rebuild
+    volumes:
+      - ./:/app/server
+    command: npm start
+
+  postgres:
+    container_name: postgres
+    build: ./postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USERS: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_URL: postgres://postgres:123456@localhost:5432/smart-brain-docker
+      POSTGRES_DB: smart-brain-docker
+      POSTGRES_HOST: postgres
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - '6379:6379'
+
