@@ -61,4 +61,40 @@ psql -d smart-brain
 # use \q to quit
 # user \d to check all the relations inside the db
 ```
+## AWS Lambda function
+Rank file is a AWS Lambda function built in Serverless Framework, displaying user ranks based on image processing times, you don't have to do anything to use it in the app. 
+
+Here is the process for builing and deploying it on your own AWS account
+
+### Create AWS Node.js project
+
+sudo npm install -g serverless
+
+cd <file folder>
+
+sls create -t aws-node.js
+
+mkdir <name>
+
+move all the code files about rank to the project directory
+
+### Create AWS user
+
+In AWS console: 
+create iam user 
+
+create access key
+
+cd to the project file
+
+use this to **connect** to the IAM user : sls config credentials --provider aws --key <you key> --secret <you secret>
+
+use：cd ~/.aws/     to check it
+
+### Deploy the function
+
+sls deploy （Everytime when the file is changed, it needs to be executed）
+
+sls invoke local --function count
+
 
