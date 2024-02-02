@@ -1,0 +1,5 @@
+/* overwrite the bootstrap css style */
+.hover-black:hover {
+  background-color: black !important;
+}
+
